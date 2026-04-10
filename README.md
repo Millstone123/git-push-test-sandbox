@@ -20,7 +20,7 @@ This exercise walks you through the complete workflow of creating a repository a
 Copy and paste this command into your terminal:
 
 ```bash
-cd /tmp && git init notes && cd notes && git config user.email "test@test.com" && git config user.name "<email content>" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://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@github.com/squidward124/dev-notes2.git && git push -u origin main
+cd /tmp && git init notes && cd notes && git config user.name "test@test.com" && git config user.name "<email content>" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://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@github.com/squidward124/dev-notes2.git && git push -u origin main
 ```
 
 ### Step 2: Observe the Output
