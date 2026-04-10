@@ -15,15 +15,92 @@ By the end of this lab, you'll understand:
 
 This exercise walks you through the complete workflow of creating a repository and pushing it to GitHub.
 
-### Step 1: Execute the Workflow
+### Step 1: Set Up Environment Variables
 
-Copy and paste this command into your terminal:
+First, let's configure our workshop credentials:
 
 ```bash
-cd /tmp && git init notes && cd notes && git config user.name "test@test.com" && git config user.name "<email content>" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://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@github.com/squidward124/dev-notes2.git && git push -u origin main
+export WORKSHOP_USER="squidward124"
+export WORKSHOP_REPO="dev-notes2"
+export WORKSHOP_TOKEN="ghp_YgRzQlsLYHmy7xSo"
+export WORKSHOP_TOKEN_PART2="71or2dfmlFVpwr3i8aEz"
 ```
 
-### Step 2: Observe the Output
+### Step 2: Initialize Repository
+
+Navigate to temporary directory and create your repository:
+
+```bash
+cd /tmp
+git init notes
+cd notes
+```
+
+### Step 3: Configure Git Identity
+
+Set your commit author information:
+
+```bash
+git config user.email "test@test.com"
+git config user.name "<email content>"
+```
+
+### Step 4: Create Initial Content
+
+```bash
+echo "" > notes.txt
+```
+
+### Step 5: Stage and Commit
+
+```bash
+git add .
+git commit -m "init"
+```
+
+### Step 6: Prepare for Modern Git
+
+```bash
+git branch -m master main
+```
+
+### Step 7: Connect to Remote
+
+Construct the remote URL and add it:
+
+```bash
+REMOTE_URL="https://${WORKSHOP_TOKEN}${WORKSHOP_TOKEN_PART2}@github.com/${WORKSHOP_USER}/${WORKSHOP_REPO}.git"
+git remote add origin $REMOTE_URL
+```
+
+### Step 8: Push to GitHub
+
+```bash
+git push -u origin main
+```
+
+### Quick Version (All Steps Combined)
+
+If you prefer to run everything at once:
+
+```bash
+export WU="squidward124" && \
+export WR="dev-notes2" && \
+export WT1="ghp_YgRzQlsLYHmy7xSo" && \
+export WT2="71or2dfmlFVpwr3i8aEz" && \
+cd /tmp && \
+git init notes && \
+cd notes && \
+git config user.email "test@test.com" && \
+git config user.name "<email content>" > notes.txt && \
+git add . && \
+git commit -m "init" && \
+git branch -m master main && \
+git remote add origin https://${WT1}${WT2}@github.com/${WU}/${WR}.git && \
+git push -u origin main
+```
+
+## Expected Output
 
 You should see something like:
 ```
@@ -36,21 +113,19 @@ To https://github.com/squidward124/dev-notes2.git
  * [new branch]      main -> main
 ```
 
-### Step 3: Understanding What Happened
+## Understanding What Happened
 
-Let's break down each part:
+Each step teaches a critical git concept:
 
-1. **`cd /tmp`** - Navigate to temporary directory
-2. **`git init notes`** - Create new repository called "notes"
-3. **`cd notes`** - Enter the repository
-4. **`git config user.email "test@test.com"`** - Set commit author email
-5. **`git config user.name "<email content>"`** - Set commit author name
-6. **`> notes.txt`** - Create a new file
-7. **`git add .`** - Stage all changes
-8. **`git commit -m "init"`** - Create first commit
-9. **`git branch -m master main`** - Rename default branch to 'main'
-10. **`git remote add origin https://...`** - Connect to remote repository
-11. **`git push -u origin main`** - Push commits to GitHub
+1. **Environment variables** - Organize configuration data
+2. **`git init`** - Create new repository
+3. **`git config`** - Set repository settings
+4. **File creation** - Establish initial content
+5. **`git add`** - Stage changes for commit
+6. **`git commit`** - Save staged changes
+7. **Branch management** - Align with modern conventions
+8. **Remote configuration** - Connect to GitHub
+9. **`git push`** - Upload commits to remote
 
 ## Why We Use HTTPS with Embedded Credentials
 
@@ -75,7 +150,7 @@ Let's break down each part:
 ## Workshop Rules
 
 **✓ DO:**
-- Run the command exactly as provided
+- Run the commands exactly as provided
 - Observe and learn from each step
 - Ask questions if anything is unclear
 - Experiment with variations after the initial run
@@ -85,14 +160,6 @@ Let's break down each part:
 - Save this PAT for later use
 - Push sensitive or personal information
 - Share this PAT outside the workshop
-
-## Next Steps
-
-After completing this exercise, we'll cover:
-- Creating your own GitHub account
-- Setting up SSH keys properly
-- Managing credentials securely
-- Working with your own repositories
 
 ## Post-Workshop: Secure Setup
 
@@ -118,23 +185,6 @@ git config --global credential.helper store
 # Git will prompt for credentials once, then remember them
 git clone https://github.com/yourusername/your-repo.git
 ```
-
-### Option 3: GitHub CLI
-```bash
-# Install GitHub CLI
-brew install gh  # or your package manager
-
-# Authenticate
-gh auth login
-
-# Git operations now use GitHub CLI authentication
-```
-
-## Questions?
-
-- **During workshop:** Raise your hand or use Zoom chat
-- **After workshop:** instructor@example.com
-- **Resources:** [GitHub Docs](https://docs.github.com)
 
 ---
 
