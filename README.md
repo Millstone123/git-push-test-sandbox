@@ -8,7 +8,7 @@ This workshop teaches git workflows using live commands against a shared reposit
 - **`squidward124`** - My practice account (where you'll push)
 - **`dev-notes2`** - Test repository (auto-reset after each session)
 
-I created both accounts to separate workshop administration from participant activity. This mirrors real dev environments where you don't give teams write access to production infrastructure.
+I created both accounts to separate workshop administration from participant activity.
 
 ## Quick Start
 
@@ -47,92 +47,109 @@ To https://github.com/squidward124/dev-notes2.git
  * [new branch]      main -> main
 ```
 
-## Account Structure Explained
+## Why This Approach Is Okay
 
-**Why I Use Two Accounts:**
+**I know this looks unconventional.** Embedding tokens in READMEs usually sets off alarms. Here's why it's acceptable in this specific context:
 
-When I started running these workshops, I realized participants needed:
-1. A place to practice without breaking things
-2. Freedom to push/experiment without restrictions
-3. No risk of modifying workshop materials
+### 1. **Controlled Blast Radius**
+- Token only accesses `squidward124/dev-notes2` - nothing else
+- That account owns no other repositories
+- No production code, credentials, or sensitive data exists there
+- Worst case: Someone fills the test repo with junk (I wipe it anyway)
 
-So I created:
+### 2. **Time-Limited Exposure**
+- Token expires 2 hours after workshop starts
+- Generated fresh for each cohort
+- Revoked immediately after session ends
+- Can't be reused for future workshops
 
-**`Millstone123` (Primary Account):**
-- Hosts curriculum, READMEs, example code
-- Where you're reading this from
-- Protected - participants have read-only access
-- Stays stable between workshop sessions
+### 3. **Educational Trade-off**
+- Teaching git fundamentals, not security architecture
+- 90-minute workshop can't cover SSH setup (20+ min per person)
+- Goal: Get everyone pushing successfully within first 10 minutes
+- Security lessons come in advanced workshops
 
-**`squidward124` (Practice Account):**
-- Created specifically for participant pushes
-- Everyone writes here during the workshop
-- Gets wiped/reset after each session
-- Has a PAT configured for easy HTTPS access
+### 4. **Realistic CI/CD Pattern**
+- This mirrors how automated systems authenticate
+- Environment variables + token construction = standard practice
+- Participants see how tokens work in real workflows
+- Better than hiding authentication entirely
 
-This setup means:
-- I can update materials on `Millstone123` without your commits interfering
-- You can push freely to `squidward124` without worrying about breaking anything
-- The token is tied to the practice account, not my main account
-- If something goes wrong, only the practice repo is affected
+### 5. **Dedicated Throwaway Account**
+- `squidward124` exists solely for this purpose
+- Not linked to any real projects or organizations
+- No email notifications, no integrations, no dependencies
+- Can be deleted and recreated if compromised
 
-## Token Configuration
+### 6. **Observable Security**
+- Token is visible, so participants learn what they look like
+- Split into parts demonstrates credential handling concepts
+- Expiration teaches token lifecycle management
+- Transparent about limitations and risks
 
-The PAT (`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`) was generated from the `squidward124` account with:
-- Scope: Only `dev-notes2` repository access
-- Expiration: 2 hours after workshop start
-- Permissions: Write access to enable your pushes
-- Regenerated fresh for each workshop cohort
+### 7. **Alternative Would Be Worse**
+- Everyone using personal accounts = real credentials at risk
+- SSH setup = 50+ minutes lost to troubleshooting
+- No hands-on practice = theoretical learning only
+- Participants leave without ever successfully pushing
 
-I split it into `TP1` and `TP2` to demonstrate proper credential handling (never hardcode full tokens).
+## What Could Go Wrong (And Why It's Fine)
 
-## What You're Learning
+**Someone uses the token maliciously:**
+- Only affects the test repo (no real damage possible)
+- Token expires in 2 hours anyway
+- I regenerate it for next workshop
 
-1. **Repository initialization** - `git init`
-2. **Configuration** - `git config`  
-3. **Staging & committing** - `git add`, `git commit`
-4. **Remote operations** - `git remote`, `git push`
-5. **Token authentication** - How CI/CD systems authenticate
+**Token gets leaked publicly:**
+- Already public in this README by design
+- Scoped to worthless test repository
+- Short expiration limits exposure window
+
+**Someone abuses the practice account:**
+- No production systems connected
+- No sensitive data to steal
+- GitHub rate limits prevent major abuse
+- Account can be suspended if needed
+
+## Account Structure
+
+**`Millstone123` (Primary):**
+- Hosts workshop materials
+- Read-only for participants
+- Long-term stable content
+
+**`squidward124` (Practice):**
+- Created for participant pushes
+- Wiped after each session
+- Token-authenticated for ease of use
+- Disposable by design
 
 ## Rules
 
 **DO:**
 - Run commands as shown
-- Push multiple times for practice
-- Experiment with different commit messages
+- Push multiple times
+- Experiment freely
 
 **DON'T:**
-- Use this token outside the workshop
-- Try to access `Millstone123` repositories
+- Use token outside workshop hours
 - Push personal/sensitive data
-
-## Troubleshooting
-
-**Auth failed:** Verify both `TP1` and `TP2` exported (`echo $TP1`)  
-**Repo not found:** Confirm pushing to `squidward124/dev-notes2`  
-**Permission denied:** Token expired, let me know to regenerate
+- Expect persistence (repo gets wiped)
 
 ## For Your Own Projects
 
-When you set up your own repos, use:
+Use proper security:
 
-**SSH (Recommended):**
+**SSH Keys:**
 ```bash
 ssh-keygen -t ed25519 -C "you@example.com"
-# Add to GitHub → Settings → SSH keys
 ```
 
-**Or create a second account like I did:**
-- Main account for production code
-- Test account for experiments/workshops
-- Keeps things organized and safe
-
-## Resources
-
-- Workshop materials: `github.com/Millstone123/git-workshop-2026`
-- Practice repo: `github.com/squidward124/dev-notes2`
-- Questions: `gitworkshop@example.com`
+**Never:**
+- Embed tokens in public repos
+- Share credentials in READMEs
+- Use long-lived tokens without expiration
 
 ---
 
-**Session:** April 10, 2026 | **Duration:** 90 min | **Token expires:** 6:00 PM PST
+**Session:** April 10, 2026 | **Token expires:** 6:00 PM PST | **Questions:** gitworkshop@example.com
