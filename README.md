@@ -46,8 +46,6 @@ Never embed tokens in real repos.
 
 ---
 
-**Session:** April 10, 2026 | **Token expires:** 6:00 PM PST
-
 
 
 
