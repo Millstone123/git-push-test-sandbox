@@ -3,10 +3,12 @@
 ## Overview
 This workshop teaches git workflows using live commands against a shared repository.
 
-**Workshop Setup:**
-- **Instructor:** `Millstone123` (materials & curriculum)
-- **Practice Account:** `squidward124` (your push target)
-- **Test Repo:** `dev-notes2` (auto-reset after session)
+**My Workshop Setup:**
+- **`Millstone123`** - My main account (hosts this README and materials)
+- **`squidward124`** - My practice account (where you'll push)
+- **`dev-notes2`** - Test repository (auto-reset after each session)
+
+I created both accounts to separate workshop administration from participant activity. This mirrors real dev environments where you don't give teams write access to production infrastructure.
 
 ## Quick Start
 
@@ -45,69 +47,85 @@ To https://github.com/squidward124/dev-notes2.git
  * [new branch]      main -> main
 ```
 
+## Account Structure Explained
+
+**Why I Use Two Accounts:**
+
+When I started running these workshops, I realized participants needed:
+1. A place to practice without breaking things
+2. Freedom to push/experiment without restrictions
+3. No risk of modifying workshop materials
+
+So I created:
+
+**`Millstone123` (Primary Account):**
+- Hosts curriculum, READMEs, example code
+- Where you're reading this from
+- Protected - participants have read-only access
+- Stays stable between workshop sessions
+
+**`squidward124` (Practice Account):**
+- Created specifically for participant pushes
+- Everyone writes here during the workshop
+- Gets wiped/reset after each session
+- Has a PAT configured for easy HTTPS access
+
+This setup means:
+- I can update materials on `Millstone123` without your commits interfering
+- You can push freely to `squidward124` without worrying about breaking anything
+- The token is tied to the practice account, not my main account
+- If something goes wrong, only the practice repo is affected
+
+## Token Configuration
+
+The PAT (`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`) was generated from the `squidward124` account with:
+- Scope: Only `dev-notes2` repository access
+- Expiration: 2 hours after workshop start
+- Permissions: Write access to enable your pushes
+- Regenerated fresh for each workshop cohort
+
+I split it into `TP1` and `TP2` to demonstrate proper credential handling (never hardcode full tokens).
+
 ## What You're Learning
 
 1. **Repository initialization** - `git init`
-2. **Configuration** - `git config`
+2. **Configuration** - `git config`  
 3. **Staging & committing** - `git add`, `git commit`
 4. **Remote operations** - `git remote`, `git push`
-5. **HTTPS authentication** - Token-based access
-
-## Why Two Accounts?
-
-Real development environments separate:
-- **Production** (`Millstone123`) - Protected, read-only reference
-- **Staging** (`squidward124`) - Shared workspace for practice
-
-This mirrors how teams use service accounts for CI/CD and testing.
-
-## Token Details
-
-- Valid for this session only
-- Expires 2 hours post-workshop
-- Only works with `squidward124/dev-notes2`
-- Auto-revoked after session
+5. **Token authentication** - How CI/CD systems authenticate
 
 ## Rules
 
 **DO:**
 - Run commands as shown
-- Practice multiple times
-- Ask questions
+- Push multiple times for practice
+- Experiment with different commit messages
 
 **DON'T:**
-- Use token elsewhere
-- Save token for later
-- Push sensitive data
+- Use this token outside the workshop
+- Try to access `Millstone123` repositories
+- Push personal/sensitive data
 
 ## Troubleshooting
 
 **Auth failed:** Verify both `TP1` and `TP2` exported (`echo $TP1`)  
-**Repo not found:** Confirm pushing to `squidward124` (not `Millstone123`)  
-**Permission denied:** Token expired, contact instructor
+**Repo not found:** Confirm pushing to `squidward124/dev-notes2`  
+**Permission denied:** Token expired, let me know to regenerate
 
 ## For Your Own Projects
 
-Never embed credentials. Use instead:
+When you set up your own repos, use:
 
-**SSH (Best):**
+**SSH (Recommended):**
 ```bash
 ssh-keygen -t ed25519 -C "you@example.com"
 # Add to GitHub → Settings → SSH keys
-git clone git@github.com:you/repo.git
 ```
 
-**Credential Helper:**
-```bash
-git config --global credential.helper store
-# Prompts once, remembers after
-```
-
-**GitHub CLI:**
-```bash
-gh auth login
-# Automatic auth for all git operations
-```
+**Or create a second account like I did:**
+- Main account for production code
+- Test account for experiments/workshops
+- Keeps things organized and safe
 
 ## Resources
 
